@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+        <script type="text/javascript"
+          src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <p class="navbar-brand"> Image Processing Project - Mathematical Expression Recognizer </p>
+            </nav>
+        <!-- List of uploaded files-->
+        {% if files %}
+            {% for file in files %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <h3 class="panel-title col-sm-10">{{file.original_name}}</h3>
+                        <div class="col-sm-2 text-right">
+                            <a href="remove?id={{file.id}}"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h4>Input</h4>
+                            <img class="img-responsive" src="image?id={{file.id}}" alt="input image">
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Normalized</h4>
+                            <img class="img-responsive" src="imagenorm?id={{file.id}}" alt="normalized image">
+                        </div>
+                    </div>
+                    <h4>Parsed</h4>
+                    <p class="lead well">\[{{file.parsed}}\]</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="jumbotron">
+                <p>There are no files uploaded. Please upload images.</p>
+            </div>
+        {% endif %}
+
+            <!-- Upload form. Note enctype attribute! -->
+            <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
+                <div class="input-group">
+                    {% csrf_token %}
+                    <input type="file" class="form-control" name="file" multiple="multiple" />
+                    <span class="input-group-btn"><input type="submit" class="form-control btn btn-default" value="Upload" /></span>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
