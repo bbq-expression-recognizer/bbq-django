@@ -19,9 +19,29 @@
             <nav class="navbar navbar-default">
                 <p class="navbar-brand"> Image Processing Project - Mathematical Expression Recognizer </p>
             </nav>
+            {% if message %}
+                <div class="alert alert-{{messageclass}}" role="alert">
+                    {{message}}
+                </div>
+            {% endif %}
+            <!-- Upload form. Note enctype attribute! -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Upload new photo
+                </div>
+                <div class="panel-body">
+                    <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
+                        <div class="input-group">
+                            {% csrf_token %}
+                            <input type="file" class="form-control" name="file" multiple="multiple" />
+                            <span class="input-group-btn"><input type="submit" class="form-control btn btn-default" value="Upload" /></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
         <!-- List of uploaded files-->
         {% if files %}
-            {% for file in files %}
+            {% for file in files reversed %}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
@@ -53,14 +73,6 @@
             </div>
         {% endif %}
 
-            <!-- Upload form. Note enctype attribute! -->
-            <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
-                <div class="input-group">
-                    {% csrf_token %}
-                    <input type="file" class="form-control" name="file" multiple="multiple" />
-                    <span class="input-group-btn"><input type="submit" class="form-control btn btn-default" value="Upload" /></span>
-                </div>
-            </form>
         </div>
     </body>
 </html>

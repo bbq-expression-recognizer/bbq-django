@@ -1,1 +1,1 @@
-BASE_FILE_PATH = 'some/path/to/store/images/'
+BASE_FILE_PATH = '/var/www/kcm1700/drops-cv/recog/'
